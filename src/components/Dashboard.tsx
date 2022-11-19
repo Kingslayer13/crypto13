@@ -1,15 +1,25 @@
 import { FAB } from '@react-native-material/core'
 import Icon from '@expo/vector-icons/MaterialCommunityIcons'
 import { StyleSheet, View } from 'react-native'
+import { RootStackParamList } from '../shared/constants/screens'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
-export default function Dashboard() {
+type Props = NativeStackScreenProps<RootStackParamList, 'DASHBOARD'>
+
+export default function Dashboard({ navigation }: Props) {
   return (
     <View style={styles.screen}>
       <View style={styles.buttonContainer}>
         <FAB
           style={styles.addButton}
           useNativeDriver={false}
-          icon={(props) => <Icon name="plus" {...props} />}
+          icon={(props) => (
+            <Icon
+              name="plus"
+              onPress={() => navigation.navigate('DASHBOARD')}
+              {...props}
+            />
+          )}
         />
       </View>
     </View>

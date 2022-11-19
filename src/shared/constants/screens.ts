@@ -1,12 +1,21 @@
 import { SCREEN_TITLES } from './labels'
+import { IScreen } from '../models/models'
+import { ScreenType } from './types'
 
-export const SCREENS = {
+const fillScreenOptions = (key: ScreenType) => ({
+  name: key,
+  title: SCREEN_TITLES[key],
+})
+
+export const SCREENS: { [key in ScreenType]: IScreen } = {
   DASHBOARD: {
-    name: 'Dashboard',
-    label: SCREEN_TITLES.DASHBOARD,
+    ...fillScreenOptions('DASHBOARD'),
   },
   ADD_ASSET: {
-    name: 'AddAsset',
-    label: SCREEN_TITLES.ADD_ASSET,
+    ...fillScreenOptions('ADD_ASSET'),
   },
+}
+
+export type RootStackParamList = {
+  [key in ScreenType]: any
 }
