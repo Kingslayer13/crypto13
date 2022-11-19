@@ -4542,10 +4542,10 @@ expo-status-bar@~1.4.2:
   resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/expo-status-bar/-/expo-status-bar-1.4.2.tgz#14f2b9a6dc7d550578421f07e0046f5fafc2b403"
   integrity sha1-FPK5ptx9VQV4Qh8H4ARvX6/CtAM=
 
-expo@~47.0.6:
+expo@^47.0.6:
   version "47.0.6"
-  resolved "https://artifactory.int.liveperson.net:443/artifactory/api/npm/lp-npm-virtual/expo/-/expo-47.0.6.tgz#4436bf0f667b6282f9189e987ddf67cd64807140"
-  integrity sha1-RDa/D2Z7YoL5GJ6Yfd9nzWSAcUA=
+  resolved "https://registry.yarnpkg.com/expo/-/expo-47.0.6.tgz#4436bf0f667b6282f9189e987ddf67cd64807140"
+  integrity sha512-XFcTnkOWEbc5mbrpdgIkPq3Heuem+8OErdjnWshwiDtaCdqK0EKToJtE2ufhCxb/RzfeJ5k07mpk+8CRRayi4w==
   dependencies:
     "@babel/runtime" "^7.14.0"
     "@expo/cli" "0.4.9"

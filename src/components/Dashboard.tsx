@@ -8,6 +8,7 @@ export default function Dashboard() {
       <View style={styles.buttonContainer}>
         <FAB
           style={styles.addButton}
+          useNativeDriver={false}
           icon={(props) => <Icon name="plus" {...props} />}
         />
       </View>
