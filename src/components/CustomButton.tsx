@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   ButtonProps,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   StyleProp,
   TextStyle,
+  Animated,
 } from 'react-native';
 import { COLORS, FONTS } from '../shared/constants/styles';
 
@@ -15,24 +16,44 @@ interface ICustomButtonProps extends ButtonProps {
 
 export default function CustomButton(props: ICustomButtonProps) {
   const { onPress, disabled, title = 'Save' } = props;
-  const getStyles = (name: 'button' | 'text') => {
+  const [animation] = useState(new Animated.Value(0));
+  const getStyles = (name: 'box' | 'text') => {
     const style = styles[name];
     return disabled ? { ...style, ...styles[`${name}Disabled`] } : style;
   };
+  const handleAnimation = (event) => {
+    Animated.timing(animation, {
+      toValue: 1,
+      duration: 100,
+      useNativeDriver: false,
+    }).start(() => {
+      Animated.timing(animation, {
+        toValue: 0,
+        duration: 100,
+        useNativeDriver: false,
+      }).start(() => onPress(event));
+    });
+  };
+  const boxInterpolation = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [COLORS.BG_DEFAULT, COLORS.BORDER_DEFAULT],
+  });
+  const animatedStyle = {
+    backgroundColor: boxInterpolation,
+  };
   return (
-    <Pressable
-      style={{ ...getStyles('button'), ...props.style }}
-      onPress={onPress}>
-      <Text style={getStyles('text')}>{title}</Text>
+    <Pressable style={props.style} onPress={handleAnimation}>
+      <Animated.View style={{ ...getStyles('box'), ...animatedStyle }}>
+        <Text style={getStyles('text')}>{title}</Text>
+      </Animated.View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    width: '100%',
-    padding: 10,
+  box: {
     height: 50,
+    padding: 10,
     borderColor: COLORS.BORDER_DEFAULT,
     borderWidth: 2,
     backgroundColor: COLORS.BG_DEFAULT,
@@ -46,7 +67,7 @@ const styles = StyleSheet.create({
   textDisabled: {
     color: 'grey',
   },
-  buttonDisabled: {
+  boxDisabled: {
     borderColor: 'grey',
   },
 });
