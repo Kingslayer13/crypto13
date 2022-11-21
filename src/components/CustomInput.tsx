@@ -13,7 +13,7 @@ export interface IInputProps extends TextInputProps {
   innerRef: any;
 }
 
-export default function Input(props: IInputProps) {
+export default function CustomInput(props: IInputProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{props.label}</Text>

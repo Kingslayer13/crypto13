@@ -53,11 +53,11 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   title: {
-    // fontFamily: FONTS.IBM_Plex_Bold,
+    fontFamily: FONTS.IBM_Plex_Bold,
     color: COLORS.TEXT_DEFAULT,
   },
   text: {
-    // fontFamily: FONTS.IBM_Plex_MediumItalic,
+    fontFamily: FONTS.IBM_Plex_MediumItalic,
     color: COLORS.TEXT_DEFAULT,
   },
 });

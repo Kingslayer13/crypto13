@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useAsset } from '../shared/hooks/useAsset';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, SCREENS } from '../shared/constants/screens';
-import Input from './Input';
+import CustomInput from './CustomInput';
 import { COLORS } from '../shared/constants/styles';
 import CustomButton from './CustomButton';
 
@@ -45,20 +45,20 @@ export default function AddAsset({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <Input
+      <CustomInput
         label="Asset Key"
         placeholder="-"
         value={assetKey}
         onChange={(e) => onAssetKeyChange(e)}
       />
-      <Input
+      <CustomInput
         variant="outlined"
         label="Asset Name"
         placeholder="-"
         value={assetName}
         editable={false}
       />
-      <Input
+      <CustomInput
         variant="outlined"
         label="Amount"
         placeholder="-"
@@ -66,7 +66,7 @@ export default function AddAsset({ navigation }: Props) {
         value={amount}
         onChange={(e) => setAmount(parseFloat(e.nativeEvent.text))}
       />
-      <Input
+      <CustomInput
         variant="outlined"
         label="Buy price"
         placeholder="-"
@@ -74,7 +74,7 @@ export default function AddAsset({ navigation }: Props) {
         value={price}
         onChange={(e) => setPrice(parseFloat(e.nativeEvent.text))}
       />
-      <Input
+      <CustomInput
         variant="outlined"
         label="Date"
         value={date.toDateString()}
