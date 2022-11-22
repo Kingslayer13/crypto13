@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, FlatList, StyleSheet, View } from 'react-native';
 import { RootStackParamList, SCREENS } from '../shared/constants/screens';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -6,15 +6,33 @@ import { useAssets } from '../shared/hooks/useAsset';
 import AssetListItem from './AssetListItem';
 import { IAsset } from '../shared/models/models';
 import { COLORS } from '../shared/constants/styles';
-import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import CustomButton from './CustomButton';
+import { getAssetsPrice } from '../shared/helpers/requestHelper';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'DASHBOARD'>;
 
 export default function Dashboard({ navigation }: Props) {
   const assets = useAssets();
+  const [assetPrices, setAssetPrices] = useState<{ [key: string]: number }>({});
   const renderItem = ({ item }) => {
-    return <AssetListItem asset={item}></AssetListItem>;
+    const currentPrice = assetPrices[item.key];
+    return (
+      <AssetListItem asset={item} currentPrice={currentPrice}></AssetListItem>
+    );
   };
+
+  useEffect(() => {
+    const getAssetPrices = async () => {
+      const symbols = assets.map((a) => a.key);
+      const prices = await getAssetsPrice(symbols);
+      if (prices.success) {
+        setAssetPrices(prices.data || {});
+      }
+    };
+    if (assets.length) {
+      getAssetPrices();
+    }
+  });
   return (
     <View style={styles.screen}>
       <FlatList
@@ -23,7 +41,7 @@ export default function Dashboard({ navigation }: Props) {
         keyExtractor={(item: IAsset) => item.key}
       />
       <View style={styles.buttonContainer}>
-        <Button
+        <CustomButton
           title="+"
           style={styles.addButton}
           color={COLORS.TEXT_DEFAULT}
@@ -42,24 +60,17 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-  },
-  addButton: {
-    position: 'absolute',
-    bottom: 50,
-    right: 50,
-    height: 50,
+    bottom: 0,
+    right: 40,
+    height: 100,
     width: 50,
     margin: 0,
     padding: 0,
-    borderColor: COLORS.BORDER_DEFAULT,
-    color: COLORS.TEXT_DEFAULT,
-    backgroundColor: COLORS.BG_DEFAULT,
-    borderWidth: 2,
     borderRadius: 0,
+  },
+  addButton: {
+    width: '100%',
+    height: '100%',
   },
   list: {
     width: '100%',

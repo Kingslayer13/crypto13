@@ -21,9 +21,9 @@ export function getNewAsset(
 ): IAsset {
   const purchase = getPurchase(amount, price, date);
   return {
-    key,
     name,
     amount,
+    key: key.toUpperCase(),
     invested: amount * price,
     p: {
       [date]: purchase,

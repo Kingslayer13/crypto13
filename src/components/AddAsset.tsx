@@ -9,7 +9,7 @@ import { COLORS, FONTS } from '../shared/constants/styles';
 import CustomButton from './CustomButton';
 import {
   getSingleAssetData,
-  getSingleAssetPrice,
+  getAssetPrice,
 } from '../shared/helpers/requestHelper';
 import Loader from './Loader';
 
@@ -50,10 +50,9 @@ export default function AddAsset({ navigation }: Props) {
     } else {
       setError(undefined);
       setAssetName(coinData.data.CoinName);
-      const coinPrice = await getSingleAssetPrice(assetKey);
-      const cPriceNum = +coinPrice.data;
-      if (!isNaN(cPriceNum)) {
-        setCurrentPrice(cPriceNum);
+      const coinPrice = await getAssetPrice(assetKey);
+      if (!isNaN(coinPrice.data)) {
+        setCurrentPrice(coinPrice.data);
       }
     }
   };
@@ -73,7 +72,7 @@ export default function AddAsset({ navigation }: Props) {
         label="Asset Key"
         placeholder="-"
         value={assetKey}
-        onChange={(e) => setAssetKey(e.nativeEvent.text)}
+        onChange={(e) => setAssetKey(e.nativeEvent.text.toUpperCase())}
         onSubmitEditing={() => onSubmitKey()}
       />
       <CustomInput

@@ -84,6 +84,8 @@ export function useAsset(assetKey?: string) {
     try {
       const storeKey = `${STORE_PREFIX_ASSET}${key}`;
       asset.p[date] = getPurchase(amount, price, date);
+      asset.amount = asset.amount + amount;
+      asset.invested = asset.invested + price * amount;
       const jsonValue = JSON.stringify(asset);
       await AsyncStorage.setItem(storeKey, jsonValue);
     } catch (e) {

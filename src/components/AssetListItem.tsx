@@ -4,26 +4,41 @@ import { StyleSheet, View, Text } from 'react-native';
 import { getAverageCost } from '../shared/helpers/assetHelper';
 import { COLORS, FONTS } from '../shared/constants/styles';
 
-export default function AssetListItem(props: { asset: IAsset }) {
+export default function AssetListItem(props: {
+  asset: IAsset;
+  currentPrice: number;
+}) {
   const asset = props.asset;
   return (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
         <Text
           style={styles.title}
-          variant="body1">{`${asset.key} (${asset.name})`}</Text>
+          variant="body1">
+          {asset.key} ({asset.name})
+        </Text>
         <Text
           style={styles.text}
-          variant="body2">{`Average cost: ${getAverageCost(asset)}`}</Text>
+          variant="body2">
+          Average cost: {getAverageCost(asset)}}
+        </Text>
         <Text
           style={styles.text}
-          variant="body2">{`Amount: ${asset.amount}`}</Text>
+          variant="body2">
+          Amount: ${asset.amount}
+        </Text>
         <Text
           style={styles.text}
-          variant="body2">{`Invested: $${asset.invested}`}</Text>
+          variant="body2">
+          Invested: ${asset.invested}
+        </Text>
       </View>
 
-      <View style={styles.itemRight}></View>
+      <View style={styles.itemRight}>
+        <Text style={styles.title} variant="body1">
+          Last Price: ${props.currentPrice}
+        </Text>
+      </View>
     </View>
   );
 }

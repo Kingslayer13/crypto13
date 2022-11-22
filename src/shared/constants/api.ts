@@ -3,6 +3,10 @@ export const API = {
     `min-api.cryptocompare.com/data/all/coinlist?fsym=${fsym}`,
   COIN_PRICE: (fsym: string, tsyms: string) =>
     `min-api.cryptocompare.com/data/price?fsym=${fsym}&tsyms=${tsyms}`,
+  MULTI_PRICE: (fsyms: string[], tsyms: string) =>
+    `min-api.cryptocompare.com/data/pricemulti?fsyms=${fsyms.join(
+      ','
+    )}&tsyms=${tsyms}`,
 };
 
 export const CC_RESPONSE_STATUSES = {
