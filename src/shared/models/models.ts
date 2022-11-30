@@ -17,8 +17,8 @@ export interface IAssetPurchase {
 export interface IAsset {
   key: string;
   name: string;
-  amount: number;
-  invested: number;
+  price?: number;
+  priceUpdateTime?: number;
   p: { [key: number]: IAssetPurchase };
 }
 

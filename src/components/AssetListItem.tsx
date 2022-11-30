@@ -1,42 +1,37 @@
 import React from 'react';
 import { IAsset } from '../shared/models/models';
 import { StyleSheet, View, Text } from 'react-native';
-import { getAverageCost } from '../shared/helpers/assetHelper';
+import {
+  getAmount,
+  getAverageCost,
+  getInvested,
+} from '../shared/helpers/assetHelper';
 import { COLORS, FONTS } from '../shared/constants/styles';
 
-export default function AssetListItem(props: {
-  asset: IAsset;
-  currentPrice: number;
-}) {
+export default function AssetListItem(props: { asset: IAsset }) {
   const asset = props.asset;
+  const amount = getAmount(asset);
+  const invested = getInvested(asset);
   return (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
-        <Text
-          style={styles.title}
-          variant="body1">
+        <Text style={styles.title} variant="body1">
           {asset.key} ({asset.name})
         </Text>
-        <Text
-          style={styles.text}
-          variant="body2">
-          Average cost: {getAverageCost(asset)}}
+        <Text style={styles.text} variant="body2">
+          Average cost: {getAverageCost(asset)}
         </Text>
-        <Text
-          style={styles.text}
-          variant="body2">
-          Amount: ${asset.amount}
+        <Text style={styles.text} variant="body2">
+          Amount: ${amount}
         </Text>
-        <Text
-          style={styles.text}
-          variant="body2">
-          Invested: ${asset.invested}
+        <Text style={styles.text} variant="body2">
+          Invested: ${invested}
         </Text>
       </View>
 
       <View style={styles.itemRight}>
-        <Text style={styles.title} variant="body1">
-          Last Price: ${props.currentPrice}
+        <Text style={styles.text} variant="body2">
+          Last Price: ${asset.price}
         </Text>
       </View>
     </View>
@@ -46,6 +41,7 @@ export default function AssetListItem(props: {
 const styles = StyleSheet.create({
   item: {
     flex: 1,
+    flexDirection: 'row',
     backgroundColor: COLORS.BG_DEFAULT,
     marginTop: 5,
     marginBottom: 5,
@@ -69,7 +65,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: FONTS.IBM_Plex_Bold,
-    color: COLORS.TEXT_DEFAULT,
+    color: COLORS.WHITE,
   },
   text: {
     fontFamily: FONTS.IBM_Plex_MediumItalic,

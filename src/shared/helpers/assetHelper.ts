@@ -12,25 +12,29 @@ export function getPurchase(
   };
 }
 
-export function getNewAsset(
-  key: string,
-  name: string,
-  amount: number,
-  price: number,
-  date: number
-): IAsset {
-  const purchase = getPurchase(amount, price, date);
+export function getNewAsset(key: string, name: string): IAsset {
   return {
     name,
-    amount,
     key: key.toUpperCase(),
-    invested: amount * price,
-    p: {
-      [date]: purchase,
-    },
+    p: {},
   };
 }
 
+export function getAmount(asset: IAsset): number {
+  return Object.keys(asset.p).reduce((amount, date) => {
+    return amount + asset.p[date].a;
+  }, 0);
+}
+
+export function getInvested(asset: IAsset): number {
+  return Object.keys(asset.p).reduce((invested, date) => {
+    const purchase = asset.p[date] as IAssetPurchase;
+    return invested + purchase.a * purchase.p;
+  }, 0);
+}
+
 export function getAverageCost(asset: IAsset): string {
-  return (asset.amount / asset.invested).toFixed(4);
+  const amount = getAmount(asset);
+  const invested = getInvested(asset);
+  return (invested / amount).toFixed(4);
 }

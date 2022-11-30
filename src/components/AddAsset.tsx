@@ -26,7 +26,7 @@ export default function AddAsset({ navigation }: Props) {
   const [currentPrice, setCurrentPrice] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>();
-  const { current, storeAssetData } = useAsset(null);
+  const { current, storeAssetData, storeCurrentPrice } = useAsset(null);
 
   const onDateChange = (event, selectedDate: Date) => {
     const currentDate = selectedDate;
@@ -61,7 +61,14 @@ export default function AddAsset({ navigation }: Props) {
     if (!isValid()) {
       return;
     }
-    await storeAssetData(assetKey, assetName, amount, price, date.getTime());
+    await storeAssetData(
+      assetKey,
+      assetName,
+      amount,
+      price,
+      date.getTime(),
+      currentPrice
+    );
     navigation.navigate(SCREENS.DASHBOARD.name);
   };
 
@@ -72,7 +79,7 @@ export default function AddAsset({ navigation }: Props) {
         label="Asset Key"
         placeholder="-"
         value={assetKey}
-        onChange={(e) => setAssetKey(e.nativeEvent.text.toUpperCase())}
+        onChange={(e) => setAssetKey(e.nativeEvent.text.trim().toUpperCase())}
         onSubmitEditing={() => onSubmitKey()}
       />
       <CustomInput
